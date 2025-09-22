@@ -1,0 +1,22 @@
+{
+  "name": "gdg_projectt",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mansi Gupta",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cloudinary": "^2.7.0",
+    "dotenv": "^17.2.2",
+    "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
+    "express": "^5.1.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.18.1",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0"
+  }
+}
