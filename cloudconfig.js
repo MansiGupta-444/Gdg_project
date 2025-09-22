@@ -1,5 +1,6 @@
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
+const { v4: uuid } = require('uuid');
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -7,16 +8,24 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'library_DEV',
-    allowedFormat: ["png","jpg","jpeg"],
+// Custom Cloudinary storage
+const storage = multer.memoryStorage(); // store file in memory first
 
-  },
-});
+const upload = multer({ storage });
 
-module.exports={
-    cloudinary,
-    storage,
+async function uploadToCloudinary(file) {
+  const result = await cloudinary.uploader.upload_stream(
+    { folder: "library_DEV", public_id: uuid() },
+    (error, result) => {
+      if (error) throw error;
+      return result;
+    }
+  );
+  return result;
 }
+
+module.exports = {
+  cloudinary,
+  upload,
+  uploadToCloudinary
+};
